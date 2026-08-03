@@ -1,0 +1,186 @@
+@import "tailwindcss";
+
+/* ──────────────────────────────────────────────────────────
+   ORIGIN INCLUSIVE & SPECIAL SCHOOL — Tailwind v4 Theme
+   Color palette extracted from the brand logo, flyer, and
+   visiting-card artwork. Rainbow-bright and cheerful.
+   ────────────────────────────────────────────────────────── */
+
+@theme {
+  /* ── Brand Blue (Primary) ── */
+  --color-brand-blue-50:  #EFF6FF;
+  --color-brand-blue-100: #DBEAFE;
+  --color-brand-blue-200: #BFDBFE;
+  --color-brand-blue-300: #93C5FD;
+  --color-brand-blue-400: #60A5FA;
+  --color-brand-blue-500: #3B82F6;
+  --color-brand-blue-600: #2563EB;
+  --color-brand-blue-700: #1D4ED8;
+  --color-brand-blue-800: #1E40AF;
+  --color-brand-blue-900: #1E3A8A;
+
+  /* ── Brand Coral / Red (CTA & Highlights) ── */
+  --color-brand-coral-50:  #FFF5F5;
+  --color-brand-coral-100: #FEE2E2;
+  --color-brand-coral-200: #FECACA;
+  --color-brand-coral-300: #FCA5A5;
+  --color-brand-coral-400: #F87171;
+  --color-brand-coral-500: #EF4444;
+  --color-brand-coral-600: #DC2626;
+  --color-brand-coral-700: #B91C1C;
+  --color-brand-coral-800: #991B1B;
+  --color-brand-coral-900: #7F1D1D;
+
+  /* ── Brand Green (Success / Nature) ── */
+  --color-brand-green-50:  #F0FDF4;
+  --color-brand-green-100: #DCFCE7;
+  --color-brand-green-200: #BBF7D0;
+  --color-brand-green-300: #86EFAC;
+  --color-brand-green-400: #4ADE80;
+  --color-brand-green-500: #22C55E;
+  --color-brand-green-600: #16A34A;
+  --color-brand-green-700: #15803D;
+  --color-brand-green-800: #166534;
+  --color-brand-green-900: #14532D;
+
+  /* ── Brand Yellow (Warmth / Sunshine) ── */
+  --color-brand-yellow-50:  #FEFCE8;
+  --color-brand-yellow-100: #FEF9C3;
+  --color-brand-yellow-200: #FEF08A;
+  --color-brand-yellow-300: #FDE047;
+  --color-brand-yellow-400: #FACC15;
+  --color-brand-yellow-500: #EAB308;
+  --color-brand-yellow-600: #CA8A04;
+  --color-brand-yellow-700: #A16207;
+  --color-brand-yellow-800: #854D0E;
+  --color-brand-yellow-900: #713F12;
+
+  /* ── Brand Purple (Playful / Creative) ── */
+  --color-brand-purple-50:  #FAF5FF;
+  --color-brand-purple-100: #F3E8FF;
+  --color-brand-purple-200: #E9D5FF;
+  --color-brand-purple-300: #D8B4FE;
+  --color-brand-purple-400: #C084FC;
+  --color-brand-purple-500: #A855F7;
+  --color-brand-purple-600: #9333EA;
+  --color-brand-purple-700: #7E22CE;
+  --color-brand-purple-800: #6B21A8;
+  --color-brand-purple-900: #581C87;
+
+  /* ── Semantic Tokens ── */
+  --color-background: #FFFFFF;
+  --color-foreground: #171717;
+
+  /* ── Font Families ── */
+  --font-outfit:  var(--font-outfit), 'Outfit', ui-sans-serif, system-ui, sans-serif;
+  --font-jakarta: var(--font-jakarta), 'Plus Jakarta Sans', ui-sans-serif, system-ui, sans-serif;
+
+  /* ── Custom Animations ── */
+  --animate-blob:      blob 7s infinite;
+  --animate-fadeIn:    fadeIn 0.2s ease-out;
+  --animate-slideDown: slideDown 0.3s ease-out;
+  --animate-float:     float 6s ease-in-out infinite;
+
+  /* ── Keyframes ── */
+  @keyframes blob {
+    0%   { transform: translate(0px, 0px) scale(1); }
+    33%  { transform: translate(30px, -50px) scale(1.1); }
+    66%  { transform: translate(-20px, 20px) scale(0.9); }
+    100% { transform: translate(0px, 0px) scale(1); }
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(-8px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  @keyframes slideDown {
+    from { opacity: 0; transform: translateY(-16px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  @keyframes float {
+    0%, 100% { transform: translateY(0px); }
+    50%      { transform: translateY(-20px); }
+  }
+}
+
+/* ── Google Fonts fallback (loaded via next/font in layout.tsx) ── */
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply bg-background text-foreground antialiased;
+    font-feature-settings: 'ss01' on;
+  }
+
+  ::selection {
+    @apply bg-brand-blue-100 text-brand-blue-800;
+  }
+}
+
+@layer components {
+  /* Rainbow wordmark treatment — echoes "ORIGIN GROWTH FOUNDATION" on the
+     visiting card and flyer. Use on short headings/eyebrows for a branded pop. */
+  .text-rainbow {
+    background-image: linear-gradient(
+      90deg,
+      var(--color-brand-green-500),
+      var(--color-brand-yellow-400) 25%,
+      var(--color-brand-coral-500) 50%,
+      var(--color-brand-purple-500) 75%,
+      var(--color-brand-blue-500)
+    );
+    background-clip: text;
+    -webkit-background-clip: text;
+    color: transparent;
+  }
+
+  /* Rainbow frame — echoes the gradient border on the visiting card artwork.
+     Wrap a card/section with this for a branded, festive border. */
+  .rainbow-border {
+    position: relative;
+    border-radius: 1.5rem;
+    background: linear-gradient(white, white) padding-box,
+      linear-gradient(
+          120deg,
+          var(--color-brand-yellow-400),
+          var(--color-brand-coral-500),
+          var(--color-brand-purple-500),
+          var(--color-brand-blue-500)
+        )
+        border-box;
+    border: 3px solid transparent;
+  }
+
+  /* Rainbow gradient bar — used as decorative top/bottom accents */
+  .rainbow-gradient-bar {
+    background: linear-gradient(
+      90deg,
+      var(--color-brand-coral-500),
+      var(--color-brand-yellow-400),
+      var(--color-brand-green-500),
+      var(--color-brand-blue-500),
+      var(--color-brand-purple-500)
+    );
+  }
+
+  /* Soft blob background accents, as used behind the Hero copy */
+  .brand-blob {
+    @apply rounded-full mix-blend-multiply filter blur-3xl opacity-60 animate-blob;
+  }
+}
+
+/* ── Utility: Hide scrollbar while allowing scroll ── */
+@layer utilities {
+  .scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
+  }
+}
