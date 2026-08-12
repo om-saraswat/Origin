@@ -10,7 +10,7 @@ export const metadata = {
 const values = [
   {
     title: 'Compassion First',
-    description: 'Every interaction is handled with deep sensitivity, patience, and warmth, creating a safe emotional space for your child.',
+    description: 'Every  interaction is handled with deep sensitivity, patience, and warmth, creating a safe emotional space for your child.',
     icon: Heart,
     colorClass: 'text-brand-coral-500 bg-brand-coral-50',
   },
