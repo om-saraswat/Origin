@@ -20,9 +20,12 @@ const bookingSchema = z.object({
 
 type BookingFormValues = z.infer<typeof bookingSchema>;
 
+const formspreeEndpoint = process.env.NEXT_PUBLIC_FORMSPREE_ENDPOINT;
+
 export default function BookAssessmentModal() {
   const { isBookModalOpen, closeBookModal } = useModal();
   const [isSubmitted, setIsSubmitted] = React.useState(false);
+  const [submitError, setSubmitError] = React.useState<string | null>(null);
 
   const {
     register,
@@ -37,6 +40,7 @@ export default function BookAssessmentModal() {
     if (isBookModalOpen) {
       document.body.style.overflow = 'hidden';
       setIsSubmitted(false);
+      setSubmitError(null);
       reset();
     } else {
       document.body.style.overflow = 'unset';
@@ -56,9 +60,31 @@ export default function BookAssessmentModal() {
   }, [closeBookModal]);
 
   const onSubmit = async (data: BookingFormValues) => {
-    // Simulate API request
-    await new Promise((resolve) => setTimeout(resolve, 1500));
-    console.log('Booking Data submitted:', data);
+    if (!formspreeEndpoint) {
+      setSubmitError('Form endpoint is not configured.');
+      return;
+    }
+
+    setSubmitError(null);
+
+    const res = await fetch(formspreeEndpoint, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Accept: 'application/json',
+      },
+      body: JSON.stringify({
+        ...data,
+        _subject: 'Book Free Assessment',
+        form: 'book-assessment',
+      }),
+    });
+
+    if (!res.ok) {
+      setSubmitError('Something went wrong. Please try again.');
+      return;
+    }
+
     setIsSubmitted(true);
   };
 
@@ -113,7 +139,12 @@ export default function BookAssessmentModal() {
                     </p>
                   </div>
 
-                  <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
+                  <form
+                    action={formspreeEndpoint}
+                    method="POST"
+                    onSubmit={handleSubmit(onSubmit)}
+                    className="space-y-4"
+                  >
                     {/* Parent Name */}
                     <div>
                       <label className="block text-xs font-semibold text-neutral-600 mb-1 flex items-center gap-1">
@@ -122,6 +153,7 @@ export default function BookAssessmentModal() {
                       <input
                         type="text"
                         {...register('parentName')}
+                        name="parentName"
                         placeholder="John Doe"
                         className="w-full px-4 py-2.5 bg-neutral-50 border border-neutral-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-brand-blue-500 focus:border-transparent transition-all"
                       />
@@ -138,6 +170,7 @@ export default function BookAssessmentModal() {
                       <input
                         type="tel"
                         {...register('phone')}
+                        name="phone"
                         placeholder="9876543210"
                         className="w-full px-4 py-2.5 bg-neutral-50 border border-neutral-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-brand-blue-500 focus:border-transparent transition-all"
                       />
@@ -155,6 +188,7 @@ export default function BookAssessmentModal() {
                         <input
                           type="text"
                           {...register('childName')}
+                          name="childName"
                           placeholder="Leo"
                           className="w-full px-4 py-2.5 bg-neutral-50 border border-neutral-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-brand-blue-500 focus:border-transparent transition-all"
                         />
@@ -170,6 +204,7 @@ export default function BookAssessmentModal() {
                         </label>
                         <select
                           {...register('childAge')}
+                          name="childAge"
                           className="w-full px-4 py-2.5 bg-neutral-50 border border-neutral-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-brand-blue-500 focus:border-transparent transition-all appearance-none"
                         >
                           <option value="">Select Age</option>
@@ -194,6 +229,7 @@ export default function BookAssessmentModal() {
                         </label>
                         <select
                           {...register('service')}
+                          name="service"
                           className="w-full px-4 py-2.5 bg-neutral-50 border border-neutral-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-brand-blue-500 focus:border-transparent transition-all appearance-none"
                         >
                           <option value="">Select Service</option>
@@ -218,11 +254,11 @@ export default function BookAssessmentModal() {
                         </label>
                         <select
                           {...register('branch')}
+                          name="branch"
                           className="w-full px-4 py-2.5 bg-neutral-50 border border-neutral-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-brand-blue-500 focus:border-transparent transition-all appearance-none"
                         >
                           <option value="">Select Branch</option>
                           <option value="shakti-nagar">Shakti Nagar (North Delhi)</option>
-                          <option value="bhajan-pura">Bhajan Pura (NE Delhi)</option>
                           <option value="virtual">Virtual / Online Consultation</option>
                         </select>
                         {errors.branch && (
@@ -238,11 +274,16 @@ export default function BookAssessmentModal() {
                       </label>
                       <textarea
                         {...register('notes')}
+                        name="notes"
                         rows={2}
                         placeholder="Please share any specific delays or diagnosis (e.g. Speech delay, Autism, ADHD)..."
                         className="w-full px-4 py-2 bg-neutral-50 border border-neutral-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-brand-blue-500 focus:border-transparent transition-all resize-none"
                       />
                     </div>
+
+                    {submitError && (
+                      <p className="text-xs text-red-500">{submitError}</p>
+                    )}
 
                     {/* Submit Button */}
                     <button
@@ -294,3 +335,5 @@ export default function BookAssessmentModal() {
     </AnimatePresence>
   );
 }
+
+

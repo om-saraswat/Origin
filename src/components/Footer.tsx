@@ -15,9 +15,12 @@ const newsletterSchema = z.object({
 
 type NewsletterFormValues = z.infer<typeof newsletterSchema>;
 
+const formspreeEndpoint = process.env.NEXT_PUBLIC_FORMSPREE_ENDPOINT;
+
 export default function Footer() {
   const { openBookModal } = useModal();
   const [subscribed, setSubscribed] = React.useState(false);
+  const [submitError, setSubmitError] = React.useState<string | null>(null);
 
   const {
     register,
@@ -29,8 +32,31 @@ export default function Footer() {
   });
 
   const onSubscribe = async (data: NewsletterFormValues) => {
-    await new Promise((resolve) => setTimeout(resolve, 1000));
-    console.log('Newsletter sub:', data);
+    if (!formspreeEndpoint) {
+      setSubmitError('Form endpoint is not configured.');
+      return;
+    }
+
+    setSubmitError(null);
+
+    const res = await fetch(formspreeEndpoint, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Accept: 'application/json',
+      },
+      body: JSON.stringify({
+        ...data,
+        _subject: 'Newsletter Subscription',
+        form: 'newsletter',
+      }),
+    });
+
+    if (!res.ok) {
+      setSubmitError('Something went wrong. Please try again.');
+      return;
+    }
+
     setSubscribed(true);
     reset();
   };
@@ -45,12 +71,18 @@ export default function Footer() {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10 lg:gap-12 mb-12">
             {/* Logo & Description */}
             <div className="flex flex-col gap-4">
-              <Link href="/" className="relative w-44 h-16 block">
+              <Link href="/" className="relative w-64 h-24 block">
                 <Image
                   src="/images/logo.jpeg"
                   alt="Origin Logo"
                   fill
-                  className="object-contain object-left"
+                  className="object-contain object-left lg:hidden"
+                />
+                <Image
+                  src="/images/logo.png"
+                  alt="Origin Logo"
+                  fill
+                  className="object-contain object-left hidden lg:block"
                 />
               </Link>
               <p className="text-sm text-neutral-500 leading-relaxed font-semibold">
@@ -134,19 +166,9 @@ export default function Footer() {
                     <p className="text-neutral-500 mt-0.5">11439, Shakti Nagar Chowk, near Roadies Gym, Delhi - 110007</p>
                   </div>
                 </li>
-                <li className="flex gap-2.5">
-                  <MapPin className="w-4 h-4 text-brand-purple-500 shrink-0 mt-0.5" />
-                  <div>
-                    <p className="font-bold text-neutral-700">Bhajan Pura Branch</p>
-                    <p className="text-neutral-500 mt-0.5">KH NO-418, Gali No 11, Bhajan Pura, Delhi - 110053</p>
-                  </div>
-                </li>
                 <li className="flex gap-2.5 items-center">
                   <Phone className="w-4 h-4 text-brand-blue-500 shrink-0" />
-                  <div className="flex flex-col">
-                    <a href="tel:8287343414" className="hover:underline text-neutral-600">+91 8287343414</a>
-                    <a href="tel:8287787479" className="hover:underline text-neutral-600">+91 8287787479</a>
-                  </div>
+                  <a href="tel:8287343414" className="hover:underline text-neutral-600">+91 8287343414</a>
                 </li>
               </ul>
             </div>
@@ -159,11 +181,17 @@ export default function Footer() {
               </p>
 
               {!subscribed ? (
-                <form onSubmit={handleSubmit(onSubscribe)} className="flex flex-col gap-2">
+                <form
+                  action={formspreeEndpoint}
+                  method="POST"
+                  onSubmit={handleSubmit(onSubscribe)}
+                  className="flex flex-col gap-2"
+                >
                   <div className="relative">
                     <input
                       type="email"
                       {...register('email')}
+                      name="email"
                       placeholder="parent@email.com"
                       className="w-full px-4 py-2.5 bg-neutral-50 border border-neutral-200 rounded-xl text-xs focus:outline-none focus:ring-2 focus:ring-brand-blue-500 font-semibold"
                     />
@@ -178,6 +206,9 @@ export default function Footer() {
                   </div>
                   {errors.email && (
                     <p className="text-[11px] text-red-500">{errors.email.message}</p>
+                  )}
+                  {submitError && (
+                    <p className="text-[11px] text-red-500">{submitError}</p>
                   )}
                 </form>
               ) : (
@@ -207,3 +238,5 @@ export default function Footer() {
     </footer>
   );
 }
+
+

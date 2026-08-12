@@ -19,8 +19,11 @@ const admissionSchema = z.object({
 
 type AdmissionFormValues = z.infer<typeof admissionSchema>;
 
+const formspreeEndpoint = process.env.NEXT_PUBLIC_FORMSPREE_ENDPOINT;
+
 export default function AdmissionsPage() {
   const [submitted, setSubmitted] = React.useState(false);
+  const [submitError, setSubmitError] = React.useState<string | null>(null);
 
   const {
     register,
@@ -32,8 +35,31 @@ export default function AdmissionsPage() {
   });
 
   const onSubmit = async (data: AdmissionFormValues) => {
-    await new Promise((resolve) => setTimeout(resolve, 1500));
-    console.log('Admissions Inquiry:', data);
+    if (!formspreeEndpoint) {
+      setSubmitError('Form endpoint is not configured.');
+      return;
+    }
+
+    setSubmitError(null);
+
+    const res = await fetch(formspreeEndpoint, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Accept: 'application/json',
+      },
+      body: JSON.stringify({
+        ...data,
+        _subject: 'Admissions Visit Request',
+        form: 'admissions',
+      }),
+    });
+
+    if (!res.ok) {
+      setSubmitError('Something went wrong. Please try again.');
+      return;
+    }
+
     setSubmitted(true);
     reset();
   };
@@ -72,7 +98,7 @@ export default function AdmissionsPage() {
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div className="flex gap-2 items-start text-xs font-semibold text-neutral-600">
                     <CheckCircle2 className="w-4 h-4 text-brand-blue-500 shrink-0 mt-0.5" />
-                    <span>Ages 1.5 - 12 Years old</span>
+                    <span>Ages 1 - 16 Years old</span>
                   </div>
                   <div className="flex gap-2 items-start text-xs font-semibold text-neutral-600">
                     <CheckCircle2 className="w-4 h-4 text-brand-blue-500 shrink-0 mt-0.5" />
@@ -122,8 +148,8 @@ export default function AdmissionsPage() {
                   </div>
                   <div>
                     <span className="absolute -left-[31px] top-0 w-4 h-4 bg-white border-2 border-brand-blue-500 rounded-full flex items-center justify-center text-[8px] font-extrabold text-brand-blue-600">3</span>
-                    <h4 className="text-xs font-extrabold text-neutral-800 font-outfit">2-Day Class Trial</h4>
-                    <p className="text-[11px] text-neutral-500 leading-relaxed font-semibold mt-1">Your child joins trial play hours so special educators can monitor peer cooperation and sensory habits.</p>
+                    <h4 className="text-xs font-extrabold text-neutral-800 font-outfit">Free consultation</h4>
+                    <p className="text-[11px] text-neutral-500 leading-relaxed font-semibold mt-1">Your child will meet our therapists and get a free consultation to assess their needs.</p>
                   </div>
                   <div>
                     <span className="absolute -left-[31px] top-0 w-4 h-4 bg-white border-2 border-brand-blue-500 rounded-full flex items-center justify-center text-[8px] font-extrabold text-brand-blue-600">4</span>
@@ -146,13 +172,19 @@ export default function AdmissionsPage() {
                       <p className="text-xs text-neutral-400 mt-1">Schedule a tour and free trial slot.</p>
                     </div>
 
-                    <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
+                    <form
+                      action={formspreeEndpoint}
+                      method="POST"
+                      onSubmit={handleSubmit(onSubmit)}
+                      className="space-y-4"
+                    >
                       {/* Parent Name */}
                       <div>
                         <label className="block text-[11px] font-semibold text-neutral-600 mb-1">Parent&apos;s Name</label>
                         <input
                           type="text"
                           {...register('parentName')}
+                          name="parentName"
                           placeholder="Jane Doe"
                           className="w-full px-4 py-2 bg-neutral-50 border border-neutral-200 rounded-xl text-xs focus:ring-2 focus:ring-brand-blue-500 focus:outline-none"
                         />
@@ -167,6 +199,7 @@ export default function AdmissionsPage() {
                         <input
                           type="tel"
                           {...register('phone')}
+                          name="phone"
                           placeholder="9876543210"
                           className="w-full px-4 py-2 bg-neutral-50 border border-neutral-200 rounded-xl text-xs focus:ring-2 focus:ring-brand-blue-500 focus:outline-none"
                         />
@@ -181,6 +214,7 @@ export default function AdmissionsPage() {
                         <input
                           type="email"
                           {...register('email')}
+                          name="email"
                           placeholder="john@example.com"
                           className="w-full px-4 py-2 bg-neutral-50 border border-neutral-200 rounded-xl text-xs focus:ring-2 focus:ring-brand-blue-500 focus:outline-none"
                         />
@@ -196,6 +230,7 @@ export default function AdmissionsPage() {
                           <input
                             type="text"
                             {...register('childName')}
+                            name="childName"
                             placeholder="Leo"
                             className="w-full px-4 py-2 bg-neutral-50 border border-neutral-200 rounded-xl text-xs focus:ring-2 focus:ring-brand-blue-500 focus:outline-none"
                           />
@@ -209,6 +244,7 @@ export default function AdmissionsPage() {
                           <label className="block text-[11px] font-semibold text-neutral-600 mb-1">Child&apos;s Age</label>
                           <select
                             {...register('childAge')}
+                            name="childAge"
                             className="w-full px-4 py-2 bg-neutral-50 border border-neutral-200 rounded-xl text-xs focus:ring-2 focus:ring-brand-blue-500 focus:outline-none appearance-none"
                           >
                             <option value="">Select Age</option>
@@ -230,11 +266,11 @@ export default function AdmissionsPage() {
                         </label>
                         <select
                           {...register('branch')}
+                          name="branch"
                           className="w-full px-4 py-2 bg-neutral-50 border border-neutral-200 rounded-xl text-xs focus:ring-2 focus:ring-brand-blue-500 focus:outline-none appearance-none"
                         >
                           <option value="">Select Branch</option>
                           <option value="shakti-nagar">Shakti Nagar (Delhi-110007)</option>
-                          <option value="bhajan-pura">Bhajan Pura (Delhi-110053)</option>
                         </select>
                         {errors.branch && (
                           <p className="text-[11px] text-red-500 mt-1">{errors.branch.message}</p>
@@ -249,6 +285,7 @@ export default function AdmissionsPage() {
                         <input
                           type="date"
                           {...register('visitDate')}
+                          name="visitDate"
                           className="w-full px-4 py-2 bg-neutral-50 border border-neutral-200 rounded-xl text-xs focus:ring-2 focus:ring-brand-blue-500 focus:outline-none"
                         />
                         {errors.visitDate && (
@@ -263,11 +300,16 @@ export default function AdmissionsPage() {
                         </label>
                         <textarea
                           {...register('notes')}
+                          name="notes"
                           rows={2}
                           placeholder="Mention speech, motor delays, hyperactivity, or previous diagnostic reviews..."
                           className="w-full px-4 py-2 bg-neutral-50 border border-neutral-200 rounded-xl text-xs focus:ring-2 focus:ring-brand-blue-500 focus:outline-none resize-none font-semibold"
                         />
                       </div>
+
+                      {submitError && (
+                        <p className="text-[11px] text-red-500">{submitError}</p>
+                      )}
 
                       {/* Submit */}
                       <button
@@ -307,3 +349,4 @@ export default function AdmissionsPage() {
     </div>
   );
 }
+

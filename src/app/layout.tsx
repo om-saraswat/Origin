@@ -73,22 +73,13 @@ const jsonLd = {
   'url': 'https://originspecialschool.com',
   'logo': 'https://originspecialschool.com/images/logo.jpeg',
   'description': 'Inclusive Special School and Child Development Center providing speech therapy, occupational therapy, behavioral support, and early intervention for children.',
-  'address': [
-    {
-      '@type': 'PostalAddress',
-      'streetAddress': '11439, Shakti Nagar Chowk, near Roadies Gym',
-      'addressLocality': 'Delhi',
-      'postalCode': '110007',
-      'addressCountry': 'IN'
-    },
-    {
-      '@type': 'PostalAddress',
-      'streetAddress': 'KH NO-418, Gali No 11, Bhajan Pura',
-      'addressLocality': 'Delhi',
-      'postalCode': '110053',
-      'addressCountry': 'IN'
-    }
-  ],
+  'address': {
+    '@type': 'PostalAddress',
+    'streetAddress': '11439, Shakti Nagar Chowk, near Roadies Gym',
+    'addressLocality': 'Delhi',
+    'postalCode': '110007',
+    'addressCountry': 'IN'
+  },
   'telephone': '+918287343414',
   'email': 'originspecialschool@gmail.com',
   'sameAs': [
@@ -102,8 +93,11 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={`${outfit.variable} ${jakarta.variable}`}>
-      <body className="font-jakarta antialiased min-h-screen flex flex-col bg-background text-foreground">
+    <html lang="en" className={`${outfit.variable} ${jakarta.variable}`} suppressHydrationWarning>
+      <body
+        className="font-jakarta antialiased min-h-screen flex flex-col bg-background text-foreground"
+        suppressHydrationWarning
+      >
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
@@ -123,3 +117,5 @@ export default function RootLayout({
     </html>
   );
 }
+
+

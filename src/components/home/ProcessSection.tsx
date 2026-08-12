@@ -8,7 +8,7 @@ const steps = [
   {
     step: '01',
     title: 'Book Assessment',
-    description: 'Submit an online request or call our Shakti Nagar / Bhajan Pura center to schedule an assessment date.',
+    description: 'Submit an online request or call our Shakti Nagar center to schedule an assessment date.',
     icon: Calendar,
     iconBg: 'bg-brand-blue-50',
     iconColor: 'text-brand-blue-500',
@@ -113,3 +113,4 @@ export default function ProcessSection() {
     </section>
   );
 }
+

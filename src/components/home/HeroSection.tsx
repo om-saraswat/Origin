@@ -106,7 +106,7 @@ export default function HeroSection() {
             >
               <div className="flex items-center gap-1.5">
                 <Smile className="w-4 h-4 text-brand-yellow-500" />
-                <span>Individual Educational Plan (IEP)</span>
+                <span>Early Intervention</span>
               </div>
               <div className="flex items-center gap-1.5">
                 <ShieldCheck className="w-4 h-4 text-brand-green-500" />
@@ -120,76 +120,116 @@ export default function HeroSection() {
           </div>
 
           {/* Right Column: Premium Layered Visual Composition */}
-          <div className="lg:col-span-5 relative mt-8 lg:mt-0 flex justify-center">
+          <div className="lg:col-span-5 relative mt-8 lg:mt-0 flex justify-center w-full">
+            {/* Mobile only: compact stacked cards */}
             <motion.div
-              initial={{ opacity: 0, scale: 0.9 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 0.7 }}
-              className="relative w-72 h-80 sm:w-96 sm:h-[420px]"
+              initial={{ opacity: 0, y: 16 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6 }}
+              className="w-full max-w-sm md:hidden space-y-3"
             >
-              {/* Central Main Soft Card */}
-              <div className="absolute inset-0 bg-gradient-to-tr from-brand-blue-100 via-brand-purple-50 to-brand-yellow-100 rounded-3xl overflow-hidden shadow-xl border-2 border-white flex flex-col justify-end p-6 select-none">
-                {/* SVG Illustration of a Happy Sun and Cloud */}
-                <div className="absolute top-10 left-10 animate-bounce">
-                  <svg className="w-16 h-16 text-brand-yellow-400 fill-current" viewBox="0 0 24 24">
-                    <circle cx="12" cy="12" r="5" />
-                    <path stroke="currentColor" strokeWidth="2" strokeLinecap="round" d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42" />
-                  </svg>
-                </div>
-
-                {/* Decorative rainbow arc */}
-                <div className="absolute top-16 right-8 w-24 h-12 rounded-t-full border-4 border-t-brand-coral-400 border-l-brand-yellow-400 border-r-brand-blue-400 border-b-transparent opacity-40" />
-
-                <div className="z-10 bg-white/80 backdrop-blur-md p-5 rounded-2xl border border-white/60 shadow-sm">
+              <div className="relative overflow-hidden rounded-3xl border-2 border-white shadow-xl bg-gradient-to-tr from-brand-blue-100 via-brand-purple-50 to-brand-yellow-100 p-5">
+                <div className="absolute top-4 right-4 w-14 h-7 rounded-t-full border-4 border-t-brand-coral-400 border-l-brand-yellow-400 border-r-brand-blue-400 border-b-transparent opacity-40" />
+                <div className="relative z-10 bg-white/85 backdrop-blur-md p-4 rounded-2xl border border-white/60 shadow-sm">
                   <span className="text-[11px] font-bold text-brand-blue-600 uppercase tracking-wider block mb-1">Our Center Motto</span>
-                  <p className="text-sm font-extrabold text-neutral-800 font-outfit">
+                  <p className="text-sm font-extrabold text-neutral-800 font-outfit leading-snug">
                     &ldquo;Inclusive education & therapies that respect every child&apos;s individual timeline.&rdquo;
                   </p>
                 </div>
               </div>
 
-              {/* Floating Card 1: Speech Therapy */}
+              <div className="grid grid-cols-2 gap-2.5">
+                {[
+                  { emoji: '🗣️', bg: 'bg-brand-blue-50', title: 'Speech Therapy', sub: 'Communicating clearly' },
+                  { emoji: '🌱', bg: 'bg-brand-yellow-50', title: 'Early Intervention', sub: 'Timely support' },
+                  { emoji: '🎒', bg: 'bg-brand-coral-50', title: 'Special Education', sub: 'Activity-based learning' },
+                  { emoji: '🎨', bg: 'bg-brand-green-50', title: 'Sensory & OT', sub: 'Motor & coordination' },
+                ].map((card) => (
+                  <div key={card.title} className="bg-white p-3 rounded-2xl shadow-md border border-neutral-100 flex items-center gap-2">
+                    <div className={`w-9 h-9 shrink-0 ${card.bg} rounded-xl flex items-center justify-center text-base`}>{card.emoji}</div>
+                    <div className="min-w-0">
+                      <h4 className="text-[11px] font-bold text-neutral-800 truncate">{card.title}</h4>
+                      <p className="text-[9px] text-neutral-400 font-semibold truncate">{card.sub}</p>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </motion.div>
+
+            {/* md+: floating animated composition */}
+            <motion.div
+              initial={{ opacity: 0, scale: 0.9 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.7 }}
+              className="relative hidden md:block w-[340px] h-[400px] lg:w-[380px] lg:h-[440px] xl:w-[420px] xl:h-[460px]"
+            >
+              <div className="absolute inset-x-5 inset-y-7 lg:inset-x-6 lg:inset-y-8 bg-gradient-to-tr from-brand-blue-100 via-brand-purple-50 to-brand-yellow-100 rounded-3xl overflow-hidden shadow-xl border-2 border-white select-none">
+                <div className="absolute top-8 left-8 lg:top-10 lg:left-10 animate-bounce">
+                  <svg className="w-12 h-12 lg:w-14 lg:h-14 text-brand-yellow-400 fill-current" viewBox="0 0 24 24">
+                    <circle cx="12" cy="12" r="5" />
+                    <path stroke="currentColor" strokeWidth="2" strokeLinecap="round" d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42" />
+                  </svg>
+                </div>
+                <div className="absolute top-12 right-8 lg:top-14 lg:right-10 w-20 h-10 lg:w-24 lg:h-12 rounded-t-full border-4 border-t-brand-coral-400 border-l-brand-yellow-400 border-r-brand-blue-400 border-b-transparent opacity-40" />
+              </div>
+
+              {/* Motto — bottom-left */}
+              <div className="absolute bottom-9 left-1 lg:bottom-10 lg:left-2 z-20 w-[55%] max-w-[210px] lg:max-w-[230px] bg-white/90 backdrop-blur-md p-3.5 lg:p-4 rounded-2xl border border-white/60 shadow-md">
+                <span className="text-[10px] font-bold text-brand-blue-600 uppercase tracking-wider block mb-1">Our Center Motto</span>
+                <p className="text-[11px] lg:text-xs font-extrabold text-neutral-800 font-outfit leading-snug">
+                  &ldquo;Inclusive education & therapies that respect every child&apos;s individual timeline.&rdquo;
+                </p>
+              </div>
+
+              {/* Speech Therapy — top-left */}
               <motion.div
                 animate={{ y: [0, -10, 0] }}
                 transition={{ repeat: Infinity, duration: 4, ease: 'easeInOut' }}
-                className="absolute -top-4 -left-4 sm:-top-6 sm:-left-6 bg-white p-3 sm:p-4 rounded-2xl shadow-lg border border-neutral-100 flex items-center gap-3"
+                className="absolute top-0 left-0 z-30 bg-white p-3 lg:p-3.5 rounded-2xl shadow-lg border border-neutral-100 flex items-center gap-2.5 lg:gap-3"
               >
-                <div className="w-10 h-10 bg-brand-blue-50 rounded-xl flex items-center justify-center text-brand-blue-500 text-lg">
-                  🗣️
-                </div>
+                <div className="w-9 h-9 lg:w-10 lg:h-10 bg-brand-blue-50 rounded-xl flex items-center justify-center text-base lg:text-lg">🗣️</div>
                 <div>
-                  <h4 className="text-xs font-bold text-neutral-800">Speech Therapy</h4>
-                  <p className="text-[10px] text-neutral-400 font-semibold">Communicating clearly</p>
+                  <h4 className="text-[11px] lg:text-xs font-bold text-neutral-800">Speech Therapy</h4>
+                  <p className="text-[9px] lg:text-[10px] text-neutral-400 font-semibold">Communicating clearly</p>
                 </div>
               </motion.div>
 
-              {/* Floating Card 2: Occupational Therapy */}
+              {/* Early Intervention — mid-left */}
               <motion.div
-                animate={{ y: [0, 10, 0] }}
-                transition={{ repeat: Infinity, duration: 4.5, ease: 'easeInOut', delay: 1 }}
-                className="absolute -bottom-4 -right-4 sm:-bottom-6 sm:-right-6 bg-white p-3 sm:p-4 rounded-2xl shadow-lg border border-neutral-100 flex items-center gap-3"
+                animate={{ y: [0, -8, 0] }}
+                transition={{ repeat: Infinity, duration: 4.2, ease: 'easeInOut', delay: 0.6 }}
+                className="absolute top-[42%] -translate-y-1/2 left-0 lg:-left-2 z-30 bg-white p-3 lg:p-3.5 rounded-2xl shadow-lg border border-neutral-100 flex items-center gap-2.5 lg:gap-3"
               >
-                <div className="w-10 h-10 bg-brand-green-50 rounded-xl flex items-center justify-center text-brand-green-500 text-lg">
-                  🎨
-                </div>
+                <div className="w-9 h-9 lg:w-10 lg:h-10 bg-brand-yellow-50 rounded-xl flex items-center justify-center text-base lg:text-lg">🌱</div>
                 <div>
-                  <h4 className="text-xs font-bold text-neutral-800">Sensory & OT</h4>
-                  <p className="text-[10px] text-neutral-400 font-semibold">Motor & coordination</p>
+                  <h4 className="text-[11px] lg:text-xs font-bold text-neutral-800">Early Intervention</h4>
+                  <p className="text-[9px] lg:text-[10px] text-neutral-400 font-semibold">Timely support</p>
                 </div>
               </motion.div>
 
-              {/* Floating Card 3: Special Education */}
+              {/* Special Education — mid-right */}
               <motion.div
                 animate={{ x: [0, 8, 0] }}
                 transition={{ repeat: Infinity, duration: 5, ease: 'easeInOut' }}
-                className="absolute top-1/2 -translate-y-1/2 -right-4 sm:-right-10 bg-white p-3 sm:p-4 rounded-2xl shadow-lg border border-neutral-100 flex items-center gap-3"
+                className="absolute top-[48%] -translate-y-1/2 -right-1 lg:-right-4 z-30 bg-white p-3 lg:p-3.5 rounded-2xl shadow-lg border border-neutral-100 flex items-center gap-2.5 lg:gap-3"
               >
-                <div className="w-10 h-10 bg-brand-coral-50 rounded-xl flex items-center justify-center text-brand-coral-500 text-lg">
-                  🎒
-                </div>
+                <div className="w-9 h-9 lg:w-10 lg:h-10 bg-brand-coral-50 rounded-xl flex items-center justify-center text-base lg:text-lg">🎒</div>
                 <div>
-                  <h4 className="text-xs font-bold text-neutral-800">Special Education</h4>
-                  <p className="text-[10px] text-neutral-400 font-semibold">Activity-based learning</p>
+                  <h4 className="text-[11px] lg:text-xs font-bold text-neutral-800">Special Education</h4>
+                  <p className="text-[9px] lg:text-[10px] text-neutral-400 font-semibold">Activity-based learning</p>
+                </div>
+              </motion.div>
+
+              {/* Sensory & OT — bottom-right */}
+              <motion.div
+                animate={{ y: [0, 10, 0] }}
+                transition={{ repeat: Infinity, duration: 4.5, ease: 'easeInOut', delay: 1 }}
+                className="absolute bottom-0 right-0 z-30 bg-white p-3 lg:p-3.5 rounded-2xl shadow-lg border border-neutral-100 flex items-center gap-2.5 lg:gap-3"
+              >
+                <div className="w-9 h-9 lg:w-10 lg:h-10 bg-brand-green-50 rounded-xl flex items-center justify-center text-base lg:text-lg">🎨</div>
+                <div>
+                  <h4 className="text-[11px] lg:text-xs font-bold text-neutral-800">Sensory & OT</h4>
+                  <p className="text-[9px] lg:text-[10px] text-neutral-400 font-semibold">Motor & coordination</p>
                 </div>
               </motion.div>
             </motion.div>

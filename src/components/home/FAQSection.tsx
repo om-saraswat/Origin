@@ -23,7 +23,7 @@ const faqItems = [
   },
   {
     question: 'Where are your centers located in Delhi?',
-    answer: 'We operate two primary branches: Shakti Nagar Chowk (North Delhi, near Roadies Gym) and Bhajan Pura (North East Delhi). Both are fully equipped with dedicated speech, sensory integration, and occupational therapy rooms.',
+    answer: 'We operate from our Shakti Nagar Chowk center (North Delhi, near Roadies Gym). It is fully equipped with dedicated speech, sensory integration, and occupational therapy rooms.',
   },
 ];
 
@@ -101,3 +101,4 @@ export default function FAQSection() {
     </section>
   );
 }
+

@@ -50,7 +50,7 @@ export default function CTASection() {
             <span className="text-brand-yellow-300">Independent Growth</span>
           </h2>
           <p className="text-base sm:text-lg text-white/80 font-semibold mt-6 max-w-xl mx-auto leading-relaxed">
-            Book a free 1-on-1 pediatric assessment at our Shakti Nagar or Bhajan Pura center today. No obligation, just compassionate expert advice.
+            Book a free 1-on-1 pediatric assessment at our Shakti Nagar center today. No obligation, just compassionate expert advice.
           </p>
 
           <div className="mt-10 flex flex-wrap justify-center gap-4">
@@ -73,3 +73,4 @@ export default function CTASection() {
     </section>
   );
 }
+

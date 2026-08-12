@@ -103,6 +103,107 @@ ABA principles focus on positive reinforcement:
 ### 3. Creating a Calm Down Space
 Designate a quiet, safe corner in your house with soft pillows, texture toys, and dim lights. Teach your child to use this space when they feel sensory overload or frustration, encouraging them to self-regulate before a meltdown escalates.
     `
+  },
+  'early-signs-of-autism-in-toddlers': {
+    slug: 'early-signs-of-autism-in-toddlers',
+    title: 'Early Signs of Autism in Toddlers: What Parents Should Notice',
+    category: 'Autism',
+    date: 'August 8, 2026',
+    excerpt: 'Learn the early social, communication, and play markers that may indicate autism — and why timely screening supports better outcomes.',
+    content: `
+Autism Spectrum Disorder (ASD) affects how a child communicates, connects socially, and processes sensory information. Early recognition does not label a child — it opens the door to therapies that build skills during the years of highest brain plasticity.
+
+### Social and Communication Signs
+Parents often notice differences first in everyday interaction:
+- Limited or inconsistent eye contact during play or feeding
+- Not responding reliably to their name by 12 months
+- Delayed pointing, waving, or showing objects to share interest
+- Preferring solitary play over back-and-forth games like peek-a-boo
+- Delayed speech, unusual tone, or repeating phrases (echolalia)
+
+### Play and Behavior Patterns
+- Strong preference for lining up toys or spinning objects rather than imaginative play
+- Distressed by small changes in routine
+- Intense focus on one topic or object
+- Repetitive movements such as hand-flapping, rocking, or toe-walking
+
+### Sensory Clues
+Many autistic children are highly sensitive to sound, light, textures, or crowded spaces — or they seek strong sensory input through crashing, spinning, or deep pressure.
+
+### What To Do Next
+1. Track observations with dates and short notes.
+2. Book a developmental screening with a pediatric specialist.
+3. Ask about early intervention: speech therapy, occupational therapy, behavioral support, and parent coaching.
+
+At Origin Special School, we combine clinical assessment with family-centered plans so support begins where it matters most — at home and in daily routines.
+    `
+  },
+  'adhd-in-children-focus-strategies-that-help': {
+    slug: 'adhd-in-children-focus-strategies-that-help',
+    title: 'ADHD in Children: Focus Strategies That Actually Help at Home',
+    category: 'ADHD',
+    date: 'August 5, 2026',
+    excerpt: 'Practical routines and therapy-backed tips to support attention, impulsivity, and daily structure for children with ADHD.',
+    content: `
+ADHD is not a motivation problem — it is a difference in how attention, impulse control, and working memory develop. Children with ADHD can be bright, creative, and energetic, yet struggle with sitting still, finishing tasks, or waiting their turn.
+
+### Common Signs Parents Notice
+- Difficulty sustaining attention on non-preferred tasks
+- Frequent fidgeting, climbing, or restlessness
+- Interrupting conversations or blurting answers
+- Losing belongings, forgetting instructions, or starting many tasks without finishing
+- Emotional outbursts when frustrated or overstimulated
+
+### Home Strategies That Work
+1. **Shorten the Steps**: Break homework or chores into 5–10 minute chunks with clear starts and finishes.
+2. **Make Instructions Visible**: Use checklists, timers, and picture cards instead of long verbal directions.
+3. **Movement Breaks**: Build short active breaks between tasks — jumping, stretching, or a quick walk.
+4. **One Cue at a Time**: Give one instruction, wait for completion, then give the next.
+5. **Catch the Good**: Immediate, specific praise ("You started your worksheet right away") is more effective than delayed rewards.
+
+### Therapy Support
+Occupational therapy can improve self-regulation and motor planning. Behavioral therapy helps families build consistent routines. Special education support strengthens attention skills needed for school success.
+
+If your child struggles daily with focus or impulsivity, a professional evaluation can clarify whether ADHD, sensory needs, anxiety, or learning differences are involved — and guide the right plan.
+    `
+  },
+  'developmental-milestones-ages-1-to-5': {
+    slug: 'developmental-milestones-ages-1-to-5',
+    title: 'Developmental Milestones from Ages 1 to 5: A Parent Checklist',
+    category: 'Developmental Milestones',
+    date: 'July 30, 2026',
+    excerpt: 'A clear age-by-age checklist of speech, motor, social, and self-help milestones — plus when to seek a professional opinion.',
+    content: `
+Developmental milestones are guideposts, not rigid deadlines. Children grow at different speeds, but consistent gaps across speech, movement, play, or self-care deserve attention. Use this checklist as a conversation starter with your pediatric team.
+
+### Around Age 1
+- Pulls to stand and may take first steps
+- Waves bye-bye and responds to their name
+- Babbles with varied sounds; may say mama/dada meaningfully
+- Explores objects by shaking, banging, or dropping them
+
+### Around Age 2
+- Walks steadily and begins to run
+- Uses about 50 words and starts combining two words
+- Copies everyday actions in play (feeding a doll, talking on a phone)
+- Shows independence — wanting to do things "myself"
+
+### Around Age 3
+- Climbs, kicks a ball, and pedals a ride-on toy
+- Speaks in short sentences understood by familiar adults
+- Plays near or with other children; takes turns with support
+- Begins simple self-care: washing hands, putting on easy clothes
+
+### Around Ages 4–5
+- Hops, balances briefly, and catches a large ball
+- Tells short stories and answers simple "why" questions
+- Cooperates in group play and follows classroom-style routines
+- Draws basic shapes, holds a crayon with better control, and manages more dressing tasks
+
+### When To Seek Support
+Contact a specialist if your child loses skills they once had, is far behind peers in speech or motor skills, avoids social engagement, or shows extreme sensory distress. Early screening at Origin can identify strengths, clarify needs, and connect your family to speech, OT, behavioral, or special education support.
+    `
   }
 };
 export type BlogCategory = 'All' | 'Autism' | 'ADHD' | 'Speech Delay' | 'Sensory Processing' | 'Parenting' | 'Developmental Milestones' | 'Early Intervention';
+

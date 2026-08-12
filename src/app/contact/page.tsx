@@ -15,8 +15,11 @@ const contactSchema = z.object({
 
 type ContactFormValues = z.infer<typeof contactSchema>;
 
+const formspreeEndpoint = process.env.NEXT_PUBLIC_FORMSPREE_ENDPOINT;
+
 export default function ContactPage() {
   const [submitted, setSubmitted] = React.useState(false);
+  const [submitError, setSubmitError] = React.useState<string | null>(null);
 
   const {
     register,
@@ -28,8 +31,31 @@ export default function ContactPage() {
   });
 
   const onSubmit = async (data: ContactFormValues) => {
-    await new Promise((resolve) => setTimeout(resolve, 1500));
-    console.log('Contact form:', data);
+    if (!formspreeEndpoint) {
+      setSubmitError('Form endpoint is not configured.');
+      return;
+    }
+
+    setSubmitError(null);
+
+    const res = await fetch(formspreeEndpoint, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Accept: 'application/json',
+      },
+      body: JSON.stringify({
+        ...data,
+        _subject: 'Contact Inquiry',
+        form: 'contact',
+      }),
+    });
+
+    if (!res.ok) {
+      setSubmitError('Something went wrong. Please try again.');
+      return;
+    }
+
     setSubmitted(true);
     reset();
   };
@@ -47,10 +73,10 @@ export default function ContactPage() {
             <Sparkles className="w-3.5 h-3.5" /> Reach Out
           </span>
           <h1 className="text-4xl md:text-5xl font-extrabold text-neutral-800 tracking-tight font-outfit">
-            Contact Our Centers
+            Contact Our Center
           </h1>
           <p className="text-sm sm:text-base text-neutral-500 mt-4 max-w-xl mx-auto leading-relaxed font-semibold">
-            We are here to support your family. Visit one of our Delhi branches or submit an inquiry to speak with our supervisor.
+            We are here to support your family. Visit our Shakti Nagar center or submit an inquiry to speak with our supervisor.
           </p>
         </div>
       </section>
@@ -60,40 +86,21 @@ export default function ContactPage() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16">
             
-            {/* Left Column: Details & Map Placeholders (7 cols) */}
+            {/* Left Column: Details (7 cols) */}
             <div className="lg:col-span-7 space-y-10">
               
-              {/* Branch Addresses */}
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-                
-                {/* Shakti Nagar */}
-                <div className="bg-white p-6 rounded-3xl border border-neutral-100 shadow-sm space-y-4">
-                  <div className="w-10 h-10 bg-brand-blue-50 text-brand-blue-600 rounded-xl flex items-center justify-center">
-                    <MapPin className="w-5 h-5" />
-                  </div>
-                  <div>
-                    <h3 className="font-extrabold text-neutral-800 text-sm font-outfit">Shakti Nagar Branch</h3>
-                    <p className="text-xs text-neutral-400 mt-1 uppercase font-bold tracking-wider">Main Center</p>
-                    <p className="text-xs text-neutral-500 leading-relaxed font-semibold mt-3">
-                      11439, Shakti Nagar Chowk, near Roadies Gym, Delhi - 110007
-                    </p>
-                  </div>
+              {/* Branch Address */}
+              <div className="bg-white p-6 rounded-3xl border border-neutral-100 shadow-sm space-y-4">
+                <div className="w-10 h-10 bg-brand-blue-50 text-brand-blue-600 rounded-xl flex items-center justify-center">
+                  <MapPin className="w-5 h-5" />
                 </div>
-
-                {/* Bhajan Pura */}
-                <div className="bg-white p-6 rounded-3xl border border-neutral-100 shadow-sm space-y-4">
-                  <div className="w-10 h-10 bg-brand-purple-50 text-brand-purple-600 rounded-xl flex items-center justify-center">
-                    <MapPin className="w-5 h-5" />
-                  </div>
-                  <div>
-                    <h3 className="font-extrabold text-neutral-800 text-sm font-outfit">Bhajan Pura Branch</h3>
-                    <p className="text-xs text-neutral-400 mt-1 uppercase font-bold tracking-wider">Origin Growth Foundation</p>
-                    <p className="text-xs text-neutral-500 leading-relaxed font-semibold mt-3">
-                      KH NO-418, Gali No 11, Bhajan Pura, Delhi - 110053
-                    </p>
-                  </div>
+                <div>
+                  <h3 className="font-extrabold text-neutral-800 text-sm font-outfit">Shakti Nagar Branch</h3>
+                  <p className="text-xs text-neutral-400 mt-1 uppercase font-bold tracking-wider">Main Center</p>
+                  <p className="text-xs text-neutral-500 leading-relaxed font-semibold mt-3">
+                    11439, Shakti Nagar Chowk, near Roadies Gym, Delhi - 110007
+                  </p>
                 </div>
-
               </div>
 
               {/* Working Hours, Phone, Email details */}
@@ -107,7 +114,6 @@ export default function ContactPage() {
                     <div>
                       <p className="text-xs font-bold text-neutral-700">Phone</p>
                       <a href="tel:8287343414" className="text-[11px] text-neutral-500 hover:underline block font-semibold">+91 8287343414</a>
-                      <a href="tel:8287787479" className="text-[11px] text-neutral-500 hover:underline block font-semibold">+91 8287787479</a>
                     </div>
                   </div>
 
@@ -145,28 +151,6 @@ export default function ContactPage() {
                 </div>
               </div>
 
-              {/* Maps Placeholder Widgets */}
-              <div className="space-y-4">
-                <h4 className="text-sm font-bold text-neutral-800 font-outfit uppercase tracking-wider">Branch Maps</h4>
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-                  {/* Map 1 */}
-                  <div className="h-44 bg-neutral-100 rounded-3xl border border-neutral-200 flex flex-col items-center justify-center p-4 relative overflow-hidden select-none">
-                    <div className="absolute inset-0 bg-[radial-gradient(#e5e7eb_1px,transparent_1px)] [background-size:16px_16px] opacity-60" />
-                    <MapPin className="w-8 h-8 text-brand-blue-500 mb-2 relative z-10" />
-                    <span className="text-xs font-extrabold text-neutral-700 relative z-10 font-outfit">Shakti Nagar Chowk Map</span>
-                    <span className="text-[10px] text-neutral-400 mt-1 relative z-10">Delhi - 110007</span>
-                  </div>
-
-                  {/* Map 2 */}
-                  <div className="h-44 bg-neutral-100 rounded-3xl border border-neutral-200 flex flex-col items-center justify-center p-4 relative overflow-hidden select-none">
-                    <div className="absolute inset-0 bg-[radial-gradient(#e5e7eb_1px,transparent_1px)] [background-size:16px_16px] opacity-60" />
-                    <MapPin className="w-8 h-8 text-brand-purple-500 mb-2 relative z-10" />
-                    <span className="text-xs font-extrabold text-neutral-700 relative z-10 font-outfit">Bhajan Pura Map</span>
-                    <span className="text-[10px] text-neutral-400 mt-1 relative z-10">Delhi - 110053</span>
-                  </div>
-                </div>
-              </div>
-
             </div>
 
             {/* Right Column: Appointment / Inquiry Form (5 cols) */}
@@ -180,13 +164,19 @@ export default function ContactPage() {
                       <p className="text-xs text-neutral-400 mt-1">We will respond within 24 hours.</p>
                     </div>
 
-                    <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
+                    <form
+                      action={formspreeEndpoint}
+                      method="POST"
+                      onSubmit={handleSubmit(onSubmit)}
+                      className="space-y-4"
+                    >
                       {/* Name */}
                       <div>
                         <label className="block text-[11px] font-semibold text-neutral-600 mb-1">Your Name</label>
                         <input
                           type="text"
                           {...register('name')}
+                          name="name"
                           placeholder="John Doe"
                           className="w-full px-4 py-2 bg-neutral-50 border border-neutral-200 rounded-xl text-xs focus:ring-2 focus:ring-brand-blue-500 focus:outline-none"
                         />
@@ -201,6 +191,7 @@ export default function ContactPage() {
                         <input
                           type="tel"
                           {...register('phone')}
+                          name="phone"
                           placeholder="9876543210"
                           className="w-full px-4 py-2 bg-neutral-50 border border-neutral-200 rounded-xl text-xs focus:ring-2 focus:ring-brand-blue-500 focus:outline-none"
                         />
@@ -215,6 +206,7 @@ export default function ContactPage() {
                         <input
                           type="email"
                           {...register('email')}
+                          name="email"
                           placeholder="john@example.com"
                           className="w-full px-4 py-2 bg-neutral-50 border border-neutral-200 rounded-xl text-xs focus:ring-2 focus:ring-brand-blue-500 focus:outline-none"
                         />
@@ -228,6 +220,7 @@ export default function ContactPage() {
                         <label className="block text-[11px] font-semibold text-neutral-600 mb-1">Message</label>
                         <textarea
                           {...register('message')}
+                          name="message"
                           rows={4}
                           placeholder="How can we help your child? Mention delays, age, or preferred timing..."
                           className="w-full px-4 py-2 bg-neutral-50 border border-neutral-200 rounded-xl text-xs focus:ring-2 focus:ring-brand-blue-500 focus:outline-none resize-none font-semibold"
@@ -236,6 +229,10 @@ export default function ContactPage() {
                           <p className="text-[11px] text-red-500 mt-1">{errors.message.message}</p>
                         )}
                       </div>
+
+                      {submitError && (
+                        <p className="text-[11px] text-red-500">{submitError}</p>
+                      )}
 
                       {/* Submit */}
                       <button
@@ -275,3 +272,6 @@ export default function ContactPage() {
     </div>
   );
 }
+
+
+

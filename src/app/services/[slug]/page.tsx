@@ -185,8 +185,8 @@ export default async function ServiceDetailPage({ params }: PageProps) {
                   <li className="flex gap-2">
                     <MapPin className="w-4 h-4 text-brand-blue-500 shrink-0 mt-0.5" />
                     <div>
-                      <p className="font-bold text-neutral-700">Shakti Nagar & Bhajan Pura</p>
-                      <p className="text-[11px]">Fully equipped physical centers in Delhi</p>
+                      <p className="font-bold text-neutral-700">Shakti Nagar</p>
+                      <p className="text-[11px]">Fully equipped physical center in Delhi</p>
                     </div>
                   </li>
                   <li className="flex gap-2">
@@ -210,3 +210,4 @@ export default async function ServiceDetailPage({ params }: PageProps) {
     </div>
   );
 }
+

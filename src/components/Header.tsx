@@ -21,11 +21,11 @@ const navigationLinks = [
 
 const servicesList = [
   { name: 'Speech & Language Therapy', href: '/services/speech-therapy' },
+  { name: 'Early Intervention', href: '/services/early-intervention' },
   { name: 'Occupational Therapy', href: '/services/occupational-therapy' },
   { name: 'Behavioral Therapy', href: '/services/behavioral-therapy' },
   { name: 'Special Education', href: '/services/special-education' },
   { name: 'Sensory Integration', href: '/services/sensory-integration' },
-  { name: 'Early Intervention', href: '/services/early-intervention' },
   { name: 'Social Skills Training', href: '/services/social-skills' },
   { name: 'Parent Counseling', href: '/services/parent-counseling' },
 ];
@@ -35,7 +35,8 @@ export default function Header() {
   const { openBookModal } = useModal();
   const [isOpen, setIsOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
-  const [isServicesOpen, setIsServicesOpen] = useState(false);
+  const [isDesktopServicesOpen, setIsDesktopServicesOpen] = useState(false);
+  const [isMobileServicesOpen, setIsMobileServicesOpen] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -48,8 +49,17 @@ export default function Header() {
   // Close menus on page change
   useEffect(() => {
     setIsOpen(false);
-    setIsServicesOpen(false);
+    setIsDesktopServicesOpen(false);
+    setIsMobileServicesOpen(false);
   }, [pathname]);
+
+  // Close desktop services when clicking outside
+  useEffect(() => {
+    if (!isDesktopServicesOpen) return;
+    const close = () => setIsDesktopServicesOpen(false);
+    document.addEventListener('click', close);
+    return () => document.removeEventListener('click', close);
+  }, [isDesktopServicesOpen]);
 
   return (
     <header
@@ -64,117 +74,149 @@ export default function Header() {
       <div className="hidden sm:flex bg-brand-blue-50 text-brand-blue-700 py-1.5 px-6 justify-between items-center text-xs font-semibold">
         <div className="flex gap-4 items-center">
           <a href="tel:8287343414" className="hover:underline flex items-center gap-1">
-            <Phone className="w-3.5 h-3.5" /> +91 8287343414, 8287787479
+            <Phone className="w-3.5 h-3.5" /> +91 8287343414
           </a>
-          <span className="flex items-center gap-1">📍 Shakti Nagar & Bhajan Pura, Delhi</span>
+          <span className="flex items-center gap-1">📍 Shakti Nagar, Delhi</span>
         </div>
         <div>
           <span className="flex items-center gap-1">📧 originspecialschool@gmail.com</span>
         </div>
       </div>
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-24 md:h-28 lg:h-28 xl:h-32 flex items-center justify-between gap-3">
         {/* Logo */}
         <Link href="/" className="flex items-center gap-2 cursor-pointer shrink-0">
-          <div className="relative w-36 h-14 md:w-44 md:h-16">
+          <div className="relative w-52 h-20 md:w-64 md:h-24 lg:w-64 lg:h-24 xl:w-72 xl:h-28">
             <Image
               src="/images/logo.jpeg"
               alt="Origin School Logo"
               fill
-              className="object-contain"
+              className="object-contain object-left lg:hidden"
+              priority
+            />
+            <Image
+              src="/images/logo.png"
+              alt="Origin School Logo"
+              fill
+              className="object-contain object-left hidden lg:block"
               priority
             />
           </div>
         </Link>
 
-        {/* Desktop Nav */}
-        <nav className="hidden lg:flex items-center gap-5 xl:gap-6">
-          {navigationLinks.map((link) => {
-            const isActive = pathname === link.href || (link.href !== '/' && pathname.startsWith(link.href));
+        {/* Desktop Nav + CTA — xl+ so large logo never collides */}
+        <div className="hidden xl:flex items-center gap-4 min-w-0">
+          <nav className="flex items-center gap-3 2xl:gap-4">
+            {navigationLinks.map((link) => {
+              const isActive = pathname === link.href || (link.href !== '/' && pathname.startsWith(link.href));
 
-            if (link.isDropdown) {
-              return (
-                <div
-                  key={link.name}
-                  className="relative"
-                  onMouseEnter={() => setIsServicesOpen(true)}
-                  onMouseLeave={() => setIsServicesOpen(false)}
-                >
-                  <button
-                    className={`flex items-center gap-1 text-sm font-semibold transition-colors py-2 ${
-                      isActive ? 'text-brand-blue-600' : 'text-neutral-600 hover:text-brand-blue-500'
-                    }`}
+              if (link.isDropdown) {
+                return (
+                  <div
+                    key={link.name}
+                    className="relative"
+                    onMouseEnter={() => setIsDesktopServicesOpen(true)}
+                    onMouseLeave={() => setIsDesktopServicesOpen(false)}
+                    onClick={(e) => e.stopPropagation()}
                   >
-                    {link.name} <ChevronDown className="w-4 h-4" />
-                  </button>
+                    <button
+                      type="button"
+                      aria-expanded={isDesktopServicesOpen}
+                      aria-haspopup="menu"
+                      onClick={() => setIsDesktopServicesOpen((open) => !open)}
+                      className={`flex items-center gap-0.5 text-sm font-semibold transition-colors py-2 whitespace-nowrap ${
+                        isActive ? 'text-brand-blue-600' : 'text-neutral-600 hover:text-brand-blue-500'
+                      }`}
+                    >
+                      {link.name}{' '}
+                      <ChevronDown
+                        className={`w-4 h-4 transition-transform ${isDesktopServicesOpen ? 'rotate-180' : ''}`}
+                      />
+                    </button>
 
-                  {/* Dropdown Menu */}
-                  {isServicesOpen && (
-                    <div className="absolute top-full left-0 w-64 bg-white border border-neutral-100 rounded-2xl shadow-xl py-3 mt-1 grid grid-cols-1 divide-y divide-neutral-50 animate-fadeIn">
-                      {servicesList.map((service) => (
-                        <Link
-                          key={service.name}
-                          href={service.href}
-                          className="px-4 py-2.5 text-xs font-semibold text-neutral-600 hover:bg-brand-blue-50 hover:text-brand-blue-600 transition-colors"
-                        >
-                          {service.name}
-                        </Link>
-                      ))}
-                    </div>
-                  )}
-                </div>
+                    {isDesktopServicesOpen && (
+                      <div
+                        role="menu"
+                        className="absolute top-full left-0 w-64 bg-white border border-neutral-100 rounded-2xl shadow-xl py-3 mt-1 grid grid-cols-1 divide-y divide-neutral-50 animate-fadeIn z-50"
+                      >
+                        {servicesList.map((service) => (
+                          <Link
+                            key={service.name}
+                            href={service.href}
+                            role="menuitem"
+                            className="px-4 py-2.5 text-xs font-semibold text-neutral-600 hover:bg-brand-blue-50 hover:text-brand-blue-600 transition-colors"
+                          >
+                            {service.name}
+                          </Link>
+                        ))}
+                      </div>
+                    )}
+                  </div>
+                );
+              }
+
+              return (
+                <Link
+                  key={link.name}
+                  href={link.href}
+                  className={`text-sm font-semibold transition-colors py-2 border-b-2 whitespace-nowrap ${
+                    isActive ? 'text-brand-blue-600 border-brand-blue-500' : 'text-neutral-600 hover:text-brand-blue-500 border-transparent'
+                  }`}
+                >
+                  {link.name}
+                </Link>
               );
-            }
+            })}
+          </nav>
 
-            return (
-              <Link
-                key={link.name}
-                href={link.href}
-                className={`text-sm font-semibold transition-colors py-2 border-b-2 ${
-                  isActive ? 'text-brand-blue-600 border-brand-blue-500' : 'text-neutral-600 hover:text-brand-blue-500 border-transparent'
-                }`}
-              >
-                {link.name}
-              </Link>
-            );
-          })}
-        </nav>
-
-        {/* CTA Button */}
-        <div className="hidden lg:block">
           <button
             onClick={openBookModal}
-            className="px-5 py-2.5 bg-brand-coral-500 hover:bg-brand-coral-600 text-white font-bold rounded-full text-sm transition-all duration-200 shadow-md shadow-brand-coral-200/30 hover:shadow-lg hover:scale-105 active:scale-95 flex items-center gap-1.5"
+            className="shrink-0 px-5 py-2.5 bg-brand-coral-500 hover:bg-brand-coral-600 text-white font-bold rounded-full text-sm transition-all duration-200 shadow-md shadow-brand-coral-200/30 hover:shadow-lg hover:scale-105 active:scale-95 flex items-center gap-1.5 whitespace-nowrap"
           >
             <Calendar className="w-4 h-4" /> Book Appointment
           </button>
         </div>
 
-        {/* Mobile Menu Toggle */}
+        {/* Menu toggle below xl */}
         <button
           onClick={() => setIsOpen(!isOpen)}
-          className="lg:hidden p-2 text-neutral-500 hover:text-neutral-700 hover:bg-neutral-100 rounded-xl"
+          className="xl:hidden p-2 text-neutral-500 hover:text-neutral-700 hover:bg-neutral-100 rounded-xl"
           aria-label="Toggle menu"
         >
           {isOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
         </button>
       </div>
 
-      {/* Mobile Menu Drawer */}
+      {/* Mobile / tablet / laptop Menu Drawer */}
       {isOpen && (
-        <div className="lg:hidden absolute top-full left-0 right-0 bg-white border-b border-neutral-100 shadow-lg p-6 flex flex-col gap-4 animate-slideDown max-h-[80vh] overflow-y-auto">
+        <div className="xl:hidden absolute top-full left-0 right-0 bg-white border-b border-neutral-100 shadow-lg p-6 flex flex-col gap-4 animate-slideDown max-h-[80vh] overflow-y-auto">
           {navigationLinks.map((link) => {
             if (link.isDropdown) {
               return (
                 <div key={link.name} className="flex flex-col">
                   <button
-                    onClick={() => setIsServicesOpen(!isServicesOpen)}
-                    className="flex justify-between items-center text-base font-bold text-neutral-700 py-1"
+                    type="button"
+                    aria-expanded={isMobileServicesOpen}
+                    onClick={(e) => {
+                      e.preventDefault();
+                      e.stopPropagation();
+                      setIsMobileServicesOpen((open) => !open);
+                    }}
+                    className="flex justify-between items-center w-full text-base font-bold text-neutral-700 py-1"
                   >
-                    {link.name} <ChevronDown className={`w-4 h-4 transition-transform ${isServicesOpen ? 'rotate-180' : ''}`} />
+                    {link.name}{' '}
+                    <ChevronDown
+                      className={`w-4 h-4 transition-transform ${isMobileServicesOpen ? 'rotate-180' : ''}`}
+                    />
                   </button>
-                  {isServicesOpen && (
+                  {isMobileServicesOpen && (
                     <div className="pl-4 mt-2 flex flex-col gap-2.5 border-l-2 border-brand-blue-100">
+                      <Link
+                        href="/services"
+                        className="text-sm font-semibold text-brand-blue-600 hover:text-brand-blue-700"
+                      >
+                        All Services
+                      </Link>
                       {servicesList.map((service) => (
                         <Link
                           key={service.name}

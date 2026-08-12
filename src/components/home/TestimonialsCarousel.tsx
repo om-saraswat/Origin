@@ -51,7 +51,7 @@ export default function TestimonialsCarousel() {
             <div className="mt-8 border-t border-neutral-100 pt-6 w-full max-w-xs flex flex-col items-center mx-auto">
               <Heart className="w-5 h-5 text-brand-coral-500 fill-current mb-2 animate-pulse" />
               <h4 className="font-extrabold text-neutral-800 text-xs uppercase tracking-wider font-outfit">Origin Inclusive & Special School</h4>
-              <p className="text-[10px] text-neutral-400 font-bold mt-1 uppercase tracking-widest">Shakti Nagar & Bhajan Pura, Delhi</p>
+              <p className="text-[10px] text-neutral-400 font-bold mt-1 uppercase tracking-widest">Shakti Nagar, Delhi</p>
             </div>
           </div>
         </motion.div>
@@ -60,3 +60,4 @@ export default function TestimonialsCarousel() {
     </section>
   );
 }
+

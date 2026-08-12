@@ -100,7 +100,7 @@ const allFaqs: FAQ[] = [
   // Category: Admissions
   {
     q: 'Where are your centers located in Delhi?',
-    a: 'We have two physical branches: Shakti Nagar Chowk (North Delhi, near Roadies Gym) and Gali No 11, Bhajan Pura (North East Delhi).',
+    a: 'We have one physical branch: Shakti Nagar Chowk (North Delhi, near Roadies Gym).',
     category: 'admissions',
   },
   {
@@ -248,3 +248,4 @@ export default function FAQPage() {
     </div>
   );
 }
+
