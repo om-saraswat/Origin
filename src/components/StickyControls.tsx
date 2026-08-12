@@ -16,8 +16,8 @@ export default function StickyControls() {
 
   return (
     <>
-      {/* Floating WhatsApp - Desktop & Mobile */}
-      <div className="fixed bottom-6 right-6 z-40 flex flex-col gap-3 items-end">
+      {/* Floating WhatsApp — sits above the mobile bottom bar */}
+      <div className="fixed bottom-18 right-4 z-50 flex flex-col gap-3 items-end md:bottom-2 md:right-4">
         {/* WhatsApp Button */}
         <button
           onClick={handleWhatsApp}
@@ -50,3 +50,4 @@ export default function StickyControls() {
     </>
   );
 }
+
