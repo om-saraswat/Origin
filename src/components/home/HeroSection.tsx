@@ -53,7 +53,7 @@ export default function HeroSection() {
               transition={{ duration: 0.5 }}
               className="inline-flex items-center gap-1.5 px-4 py-1.5 bg-brand-blue-50 border border-brand-blue-100 text-brand-blue-600 rounded-full text-xs font-bold mb-6"
             >
-              <Sparkles className="w-3.5 h-3.5" /> Inclusive & Special School
+              <Sparkles className="w-3.5 h-3.5" /> Origin Inclusive Special School · Delhi
             </motion.div>
 
             <motion.h1
@@ -62,9 +62,9 @@ export default function HeroSection() {
               transition={{ duration: 0.6, delay: 0.1 }}
               className="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-neutral-800 tracking-tight leading-[1.1] font-outfit"
             >
-              Inclusive Education <br className="hidden sm:inline" />
-              <span className="text-rainbow">Every Child&apos;s</span>{' '}
-              <span className="text-brand-coral-500">Right</span>
+              Origin Inclusive{' '}
+              <span className="text-rainbow">Special School</span>{' '}
+              <span className="text-brand-coral-500">Delhi</span>
             </motion.h1>
 
             <motion.p
@@ -73,7 +73,7 @@ export default function HeroSection() {
               transition={{ duration: 0.6, delay: 0.2 }}
               className="mt-6 text-base sm:text-lg text-neutral-500 leading-relaxed font-semibold max-w-xl"
             >
-              Origin is committed to providing inclusive education and therapeutic support for children with diverse needs. We bring the best activity-based education and physical activities for your kids.
+              Inclusive education every child&apos;s right. Origin Inclusive Special School in Shakti Nagar, Delhi provides therapy and activity-based learning for children with diverse needs.
             </motion.p>
 
             <motion.div

@@ -24,17 +24,18 @@ const SITE_URL = 'https://origin-edu.in';
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
   title: {
-    default: 'Origin Special School | Child Development & Therapy Center, Delhi',
-    template: '%s | Origin Special School, Delhi',
+    default: 'Origin Inclusive Special School Delhi | Therapy & Child Development',
+    template: '%s | Origin Inclusive Special School Delhi',
   },
   description:
-    'Origin Special School (origin-edu.in) in Shakti Nagar, Delhi — early intervention, speech therapy, occupational therapy, special education, autism & ADHD support for children.',
+    'Origin Inclusive Special School Delhi (origin-edu.in) in Shakti Nagar — speech therapy, occupational therapy, special education, autism & ADHD support, and early intervention.',
   keywords: [
+    'Origin Inclusive Special School Delhi',
+    'Origin Inclusive Special School',
+    'Origin Special School Delhi',
     'Origin Special School',
     'origin-edu.in',
-    'Origin Inclusive Special School Delhi',
-    'special school Delhi',
-    'special school Shakti Nagar',
+    'special school Shakti Nagar Delhi',
     'speech therapy Delhi',
     'occupational therapy Delhi',
     'child development center Delhi',
@@ -43,12 +44,11 @@ export const metadata: Metadata = {
     'early intervention Delhi',
     'special education Delhi',
     'sensory integration therapy Delhi',
-    'behavioral therapy for kids Delhi',
   ],
   authors: [{ name: 'Origin Inclusive & Special School', url: SITE_URL }],
   creator: 'Origin Growth Foundation',
   publisher: 'Origin Inclusive & Special School',
-  applicationName: 'Origin Special School',
+  applicationName: 'Origin Inclusive Special School',
   category: 'education',
   alternates: {
     canonical: '/',
@@ -68,24 +68,24 @@ export const metadata: Metadata = {
     type: 'website',
     locale: 'en_IN',
     url: SITE_URL,
-    title: 'Origin Special School | Child Development & Therapy Center, Delhi',
+    title: 'Origin Inclusive Special School Delhi | Therapy & Child Development',
     description:
-      'Expert therapies and inclusive education for children with special needs in Delhi. Speech, OT, ABA, sensory integration & early intervention.',
-    siteName: 'Origin Special School | origin-edu.in',
+      'Origin Inclusive Special School in Shakti Nagar, Delhi — speech, OT, ABA, sensory integration, special education & early intervention.',
+    siteName: 'Origin Inclusive Special School Delhi',
     images: [
       {
         url: '/images/logo.jpeg',
         width: 1200,
         height: 630,
-        alt: 'Origin Special School — origin-edu.in',
+        alt: 'Origin Inclusive Special School Delhi — origin-edu.in',
       },
     ],
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Origin Special School | Child Development & Therapy Center, Delhi',
+    title: 'Origin Inclusive Special School Delhi | origin-edu.in',
     description:
-      'Speech therapy, OT, special education & early intervention in Shakti Nagar, Delhi. Visit origin-edu.in',
+      'Inclusive special school & child therapies in Shakti Nagar, Delhi. Speech, OT, special education & early intervention.',
     images: ['/images/logo.jpeg'],
   },
 };
@@ -94,13 +94,19 @@ const jsonLd = {
   '@context': 'https://schema.org',
   '@type': 'EducationalOrganization',
   '@id': `${SITE_URL}/#organization`,
-  name: 'Origin Inclusive & Special School',
-  alternateName: ['Origin Growth Foundation', 'Origin Special School', 'origin-edu.in'],
+  name: 'Origin Inclusive Special School',
+  alternateName: [
+    'Origin Inclusive Special School Delhi',
+    'Origin Inclusive & Special School',
+    'Origin Special School',
+    'Origin Growth Foundation',
+    'origin-edu.in',
+  ],
   url: SITE_URL,
   logo: `${SITE_URL}/images/logo.jpeg`,
   image: `${SITE_URL}/images/logo.jpeg`,
   description:
-    'Inclusive Special School and Child Development Center in Delhi providing speech therapy, occupational therapy, behavioral support, and early intervention for children.',
+    'Origin Inclusive Special School Delhi provides speech therapy, occupational therapy, behavioral support, special education, and early intervention for children in Shakti Nagar, Delhi.',
   address: {
     '@type': 'PostalAddress',
     streetAddress: '11439, Shakti Nagar Chowk, near Roadies Gym',
