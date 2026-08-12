@@ -2,7 +2,7 @@ import type { MetadataRoute } from 'next';
 import { blogsData } from '@/lib/blogsData';
 import { servicesData } from '@/lib/servicesData';
 
-const BASE = 'https://origin-edu.in';
+const BASE = 'https://www.origin-edu.in';
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const staticPages: MetadataRoute.Sitemap = [
@@ -16,7 +16,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     '/faq',
     '/contact',
   ].map((path) => ({
-    url: `${BASE}${path}`,
+    url: `${BASE}${path || '/'}`,
     lastModified: new Date(),
     changeFrequency: path === '' ? 'weekly' : 'monthly',
     priority: path === '' ? 1 : path === '/contact' || path === '/admissions' ? 0.9 : 0.8,

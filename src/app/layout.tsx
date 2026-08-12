@@ -19,7 +19,7 @@ const jakarta = Plus_Jakarta_Sans({
   display: 'swap',
 });
 
-const SITE_URL = 'https://origin-edu.in';
+const SITE_URL = 'https://www.origin-edu.in';
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
